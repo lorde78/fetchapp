@@ -2,10 +2,10 @@
 -- version 5.1.3
 -- https://www.phpmyadmin.net/
 --
--- Hôte : db
--- Généré le : mer. 06 avr. 2022 à 17:36
--- Version du serveur : 10.6.5-MariaDB-1:10.6.5+maria~focal
--- Version de PHP : 8.0.15
+-- Host: db
+-- Generation Time: Apr 10, 2022 at 07:37 PM
+-- Server version: 10.7.3-MariaDB-1:10.7.3+maria~focal
+-- PHP Version: 8.0.16
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,77 +18,96 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de données : `data`
+-- Database: `data`
 --
-CREATE DATABASE IF NOT EXISTS `data` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-USE `data`;
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `Blog`
+-- Table structure for table `post`
 --
 
-CREATE TABLE `Blog` (
-  `id` int(11) NOT NULL,
-  `authorId` int(11) NOT NULL,
-  `date` datetime NOT NULL,
-  `title` varchar(255) NOT NULL,
-  `content` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+CREATE TABLE `post` (
+  `idPost` int(11) NOT NULL,
+  `Title` varchar(255) NOT NULL,
+  `Content` varchar(255) NOT NULL,
+  `idUser` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `post`
+--
+
+INSERT INTO `post` (`idPost`, `Title`, `Content`, `idUser`) VALUES
+(1, 'fve', 'erfve', 6);
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `User`
+-- Table structure for table `user`
 --
 
-CREATE TABLE `User` (
-  `id` int(11) NOT NULL,
-  `username` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL,
-  `token` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+CREATE TABLE `user` (
+  `idUser` int(11) NOT NULL,
+  `Username` varchar(255) NOT NULL,
+  `Password` varchar(11) NOT NULL,
+  `Token` char(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Déchargement des données de la table `User`
+-- Dumping data for table `user`
 --
 
-INSERT INTO `User` (`id`, `username`, `password`, `token`) VALUES
-(1, 'FrancisHuster', '$2y$10$kgElSKkY9xgITrnfaAZLAee.5/JgHL9aRM3iZg27ShpOBsRA.h.Z.', 'aa25fd1453266220bc138fa3b033330f6d44129041129bc1c6e7f9a810529e527d2931ec13a068e65dff878a283ff4d5ff52'),
-(2, 'JohnBob', '$2y$10$4/1Iqkb/mbMB4wr9YOnkfegeRKszIPiSzVJ2Ik4G5kDPyjgsgQrI2', 'aff9e23e242cbb759bd14a97fdd720c7d38b23064c1757837515f55c61dd7e15231f77155c64cd9511c80125af5fc97f30e3');
+INSERT INTO `user` (`idUser`, `Username`, `Password`, `Token`) VALUES
+(6, 'alpha', '12345', '04af1903b47dfcc195c8917dee27fbfd87f961e3b0cb84022a'),
+(16, 'topkek', 'cou', 'da71d33a41664287487b492d4a7269e8921fee2bc4f31d3e75'),
+(17, 'knee', 'coucou', 'bbf69b58c3a278c37d5039b8f05dc2d289e26a8b4e5f4b0e86'),
+(19, 'mlkj', 'lkjhlkjh', 'aa0f6527d678dad36876be0c5ab89b17fa5cb70d89c397579c');
 
 --
--- Index pour les tables déchargées
---
-
---
--- Index pour la table `Blog`
---
-ALTER TABLE `Blog`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `User`
---
-ALTER TABLE `User`
-  ADD PRIMARY KEY (`id`);
-
---
--- AUTO_INCREMENT pour les tables déchargées
+-- Indexes for dumped tables
 --
 
 --
--- AUTO_INCREMENT pour la table `Blog`
+-- Indexes for table `post`
 --
-ALTER TABLE `Blog`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+ALTER TABLE `post`
+  ADD PRIMARY KEY (`idPost`),
+  ADD KEY `idUser` (`idUser`);
 
 --
--- AUTO_INCREMENT pour la table `User`
+-- Indexes for table `user`
 --
-ALTER TABLE `User`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`idUser`),
+  ADD UNIQUE KEY `idUser` (`idUser`),
+  ADD UNIQUE KEY `Username` (`Username`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `post`
+--
+ALTER TABLE `post`
+  MODIFY `idPost` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `user`
+--
+ALTER TABLE `user`
+  MODIFY `idUser` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `post`
+--
+ALTER TABLE `post`
+  ADD CONSTRAINT `post_ibfk_1` FOREIGN KEY (`idUser`) REFERENCES `user` (`idUser`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
